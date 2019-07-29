@@ -13,10 +13,6 @@
     "ts-node": "^8.3.0"
   },
   "dependencies": {
-    "@types/node": "^12.6.8",
-    "graphql": "^14.4.2",
-    "graphql-api-koa": "^2.0.0",
-    "koa": "^2.7.0",
-    "koa-bodyparser": "^4.2.1"
+    "koa": "^2.7.0"
   }
 }
