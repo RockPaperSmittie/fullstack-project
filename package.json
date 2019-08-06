@@ -4,7 +4,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo No test specified",
-    "start": "nodemon src/app.ts"
+    "start": "ts-node src/index.ts",
+    "postinstall": "prisma2 generate"
   },
   "repository": "https://github.com/RockPaperSmittie/fullstack-project.git",
   "author": "Jaco Basson & Ruan Smit",
@@ -13,8 +14,6 @@
     "ts-node": "^8.3.0"
   },
   "dependencies": {
-    "apollo-server-koa": "^2.8.0",
-    "graphql": "^14.4.2",
     "koa": "^2.7.0",
     "nodemon": "^1.19.1",
     "typescript": "^3.5.3"
