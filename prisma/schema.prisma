@@ -1,0 +1,17 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://Jaco2@localhost:5432/fullstack_project?schema=fullstack"
+}
+
+generator photonjs {
+  provider = "photonjs"
+}
+
+model User {
+  id                String  @id @default(cuid()) @unique
+  email             String  @unique
+  username          String  @unique
+  firstName         String?
+  lastName          String?
+  profilePictureURL String?
+}

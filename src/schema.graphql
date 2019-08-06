@@ -1,0 +1,69 @@
+  type Query {
+    users: [User!]!
+    user (id: String!): User!
+    reviews: [Review!]!
+    restaurants: [Restaurant!]!
+  }
+
+  type Mutation {
+    createUser (input: CreateUserInput): User!
+    updateUser (input: UpdateUserInput): User!
+    createReview (input: CreateReviewInput): Review!
+  }
+
+  type User {
+    id: ID!
+    userName: String!
+    firstName: String
+    lastName: Stringd
+    reviews: [Review!]
+    profilePicture: String!
+  }
+
+  type Review {
+    id: ID!
+    rating: Int!
+    description: String!
+    author: User!
+    restaurant: Restaurant!
+  }
+
+  type Restaurant {
+    id: String!
+    name: String!
+    picture: String!
+    reviews: [Review!]
+  }
+
+  input CreateUserInput {
+    userName: String!
+    firstName: String
+    lastName: String
+    profilePicture: String!
+  }
+
+  input ReviewInput {
+    rating: Int!
+    description: String!
+    author: UserInput!
+    restaurant: RestaurantInput!
+  },
+
+  input UserInput {
+    userName: String!
+    firstName: String
+    lastName: String
+    profilePicture: String!
+  }
+
+  input RestaurantInput {
+      name: String!
+  }
+
+  input UpdateUserInput {
+    username: String
+    firstName: String
+    lastName: String
+    reviews: [Review!]
+    profilePicture: String!
+  }
