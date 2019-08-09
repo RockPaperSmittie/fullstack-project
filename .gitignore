@@ -2,8 +2,8 @@
 
 # dependencies
 node_modules
-example/node_modules
-example/yarn.lock
+yarn.lock
+yarn-error.log
 
 # production
 /dist
@@ -11,4 +11,3 @@ example/yarn.lock
 # misc
 .DS_Store
 .env
-npm-debug.log
