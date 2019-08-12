@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from "graphql";
-import { MyContext } from "./context";
+import { Context } from "./context";
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -37,7 +37,11 @@ export type Mutation = {
   updateUser: User;
   deleteUser: User;
   createRestaurant: Restaurant;
+  updateRestaurant: Restaurant;
+  deleteRestaurant: Restaurant;
   createReview: Review;
+  updateReview: Review;
+  deleteReview: Review;
 };
 
 export type MutationCreateUserArgs = {
@@ -56,8 +60,24 @@ export type MutationCreateRestaurantArgs = {
   input: CreateRestaurantInput;
 };
 
+export type MutationUpdateRestaurantArgs = {
+  input: UpdateRestaurantInput;
+};
+
+export type MutationDeleteRestaurantArgs = {
+  id?: Maybe<Scalars["String"]>;
+};
+
 export type MutationCreateReviewArgs = {
-  input?: Maybe<CreateReviewInput>;
+  input: CreateReviewInput;
+};
+
+export type MutationUpdateReviewArgs = {
+  input: UpdateReviewInput;
+};
+
+export type MutationDeleteReviewArgs = {
+  id?: Maybe<Scalars["String"]>;
 };
 
 export type Query = {
@@ -67,6 +87,7 @@ export type Query = {
   reviews: Array<Review>;
   review?: Maybe<Review>;
   restaurants: Array<Restaurant>;
+  restaurant?: Maybe<Restaurant>;
 };
 
 export type QueryUserArgs = {
@@ -74,6 +95,10 @@ export type QueryUserArgs = {
 };
 
 export type QueryReviewArgs = {
+  id: Scalars["String"];
+};
+
+export type QueryRestaurantArgs = {
   id: Scalars["String"];
 };
 
@@ -98,6 +123,22 @@ export type Review = {
   description: Scalars["String"];
   author: User;
   restaurant: Restaurant;
+};
+
+export type UpdateRestaurantInput = {
+  id?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars["String"]>;
+  picture?: Maybe<Scalars["String"]>;
+  location?: Maybe<Scalars["String"]>;
+  reviews?: Maybe<Array<CreateReviewInput>>;
+};
+
+export type UpdateReviewInput = {
+  id: Scalars["String"];
+  rating?: Maybe<Scalars["Int"]>;
+  description?: Maybe<Scalars["String"]>;
+  author?: Maybe<User>;
+  restaurant?: Maybe<RestaurantInput>;
 };
 
 export type UpdateUserInput = {
@@ -213,6 +254,8 @@ export type ResolversTypes = {
   UserInput: UserInput;
   RestaurantInput: RestaurantInput;
   CreateRestaurantInput: CreateRestaurantInput;
+  UpdateRestaurantInput: UpdateRestaurantInput;
+  UpdateReviewInput: UpdateReviewInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
 };
 
@@ -232,11 +275,13 @@ export type ResolversParentTypes = {
   UserInput: UserInput;
   RestaurantInput: RestaurantInput;
   CreateRestaurantInput: CreateRestaurantInput;
+  UpdateRestaurantInput: UpdateRestaurantInput;
+  UpdateReviewInput: UpdateReviewInput;
   Boolean: Scalars["Boolean"];
 };
 
 export type MutationResolvers<
-  ContextType = MyContext,
+  ContextType =,
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
   createUser?: Resolver<
@@ -263,16 +308,40 @@ export type MutationResolvers<
     ContextType,
     MutationCreateRestaurantArgs
   >;
+  updateRestaurant?: Resolver<
+    ResolversTypes["Restaurant"],
+    ParentType,
+    ContextType,
+    MutationUpdateRestaurantArgs
+  >;
+  deleteRestaurant?: Resolver<
+    ResolversTypes["Restaurant"],
+    ParentType,
+    ContextType,
+    MutationDeleteRestaurantArgs
+  >;
   createReview?: Resolver<
     ResolversTypes["Review"],
     ParentType,
     ContextType,
     MutationCreateReviewArgs
   >;
+  updateReview?: Resolver<
+    ResolversTypes["Review"],
+    ParentType,
+    ContextType,
+    MutationUpdateReviewArgs
+  >;
+  deleteReview?: Resolver<
+    ResolversTypes["Review"],
+    ParentType,
+    ContextType,
+    MutationDeleteReviewArgs
+  >;
 };
 
 export type QueryResolvers<
-  ContextType = MyContext,
+  ContextType =,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
   users?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
@@ -294,10 +363,16 @@ export type QueryResolvers<
     ParentType,
     ContextType
   >;
+  restaurant?: Resolver<
+    Maybe<ResolversTypes["Restaurant"]>,
+    ParentType,
+    ContextType,
+    QueryRestaurantArgs
+  >;
 };
 
 export type RestaurantResolvers<
-  ContextType = MyContext,
+  ContextType =,
   ParentType extends ResolversParentTypes["Restaurant"] = ResolversParentTypes["Restaurant"]
 > = {
   id?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
@@ -312,7 +387,7 @@ export type RestaurantResolvers<
 };
 
 export type ReviewResolvers<
-  ContextType = MyContext,
+  ContextType =,
   ParentType extends ResolversParentTypes["Review"] = ResolversParentTypes["Review"]
 > = {
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
@@ -324,7 +399,7 @@ export type ReviewResolvers<
 };
 
 export type UserResolvers<
-  ContextType = MyContext,
+  ContextType =,
   ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
 > = {
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
@@ -349,7 +424,7 @@ export type UserResolvers<
   >;
 };
 
-export type Resolvers<ContextType = MyContext> = {
+export type Resolvers<ContextType => = {
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Restaurant?: RestaurantResolvers<ContextType>;
@@ -361,4 +436,4 @@ export type Resolvers<ContextType = MyContext> = {
  * @deprecated
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
  */
-export type IResolvers<ContextType = MyContext> = Resolvers<ContextType>;
+export type IResolvers<ContextType => = Resolvers<ContextType>;
