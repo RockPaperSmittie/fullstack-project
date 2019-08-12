@@ -121,6 +121,21 @@
     },
     {
       "stepType": "CreateField",
+      "model": "User",
+      "name": "restaurant",
+      "type": {
+        "Relation": {
+          "to": "Restaurant",
+          "to_fields": [],
+          "name": "RestaurantToUser",
+          "on_delete": "None"
+        }
+      },
+      "arity": "optional",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
       "model": "Review",
       "name": "id",
       "type": {
@@ -235,6 +250,23 @@
     {
       "stepType": "CreateField",
       "model": "Restaurant",
+      "name": "createdAt",
+      "type": {
+        "Base": "DateTime"
+      },
+      "arity": "required",
+      "isUnique": false,
+      "default": {
+        "Expression": [
+          "now",
+          "DateTime",
+          []
+        ]
+      }
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Restaurant",
       "name": "name",
       "type": {
         "Base": "String"
@@ -245,7 +277,7 @@
     {
       "stepType": "CreateField",
       "model": "Restaurant",
-      "name": "picture",
+      "name": "pictureURL",
       "type": {
         "Base": "String"
       },
@@ -275,6 +307,23 @@
         }
       },
       "arity": "list",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Restaurant",
+      "name": "author",
+      "type": {
+        "Relation": {
+          "to": "User",
+          "to_fields": [
+            "id"
+          ],
+          "name": "RestaurantToUser",
+          "on_delete": "None"
+        }
+      },
+      "arity": "optional",
       "isUnique": false
     }
   ]

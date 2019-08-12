@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo No test specified",
     "start": "nodemon ts-node src/index.ts",
+    "seed": "ts-node prisma/seed.ts",
     "postinstall": "prisma2 generate",
     "generate": "graphql-codegen"
   },

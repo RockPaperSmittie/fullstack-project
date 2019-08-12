@@ -14,11 +14,11 @@
 
     createRestaurant (input: CreateRestaurantInput!): Restaurant!
     updateRestaurant (input: UpdateRestaurantInput!): Restaurant!
-    deleteRestaurant (id: String): Restaurant!
+    deleteRestaurant (id: String!): Restaurant!
 
     createReview (input: CreateReviewInput!): Review!
     updateReview (input: UpdateReviewInput!): Review!
-    deleteReview (id: String): Review!
+    deleteReview (id: String!): Review!
   }
 
   type User {
@@ -43,10 +43,12 @@
 
   type Restaurant {
     id: String!
+    createdAt: String!
     name: String!
-    picture: String!
+    pictureURL: String!
     location: String!
     reviews: [Review!]
+    author: User
   }
 
   input CreateUserInput {
@@ -60,23 +62,16 @@
   input CreateReviewInput {
     rating: Int!
     description: String!
-    author: UserInput!
-    restaurant: RestaurantInput!
+    author: String!
+    restaurant: String!
   },
 
   input UpdateReviewInput {
     id: String!
     rating: Int
     description: String
-    author: User
-    restaurant: RestaurantInput
-  }
-
-  input UserInput {
-    userName: String!
-    firstName: String
-    lastName: String
-    profilePictureURL: String!
+    author: String
+    restaurant: String
   }
 
   input RestaurantInput {
@@ -88,20 +83,19 @@
     username: String
     firstName: String
     lastName: String
-    reviews: [CreateReviewInput!]
     profilePictureURL: String!
   }
 
   input CreateRestaurantInput {
     name: String!
-    picture: String!
+    pictureURL: String!
     location: String!
+    user: String!
   }
 
   input UpdateRestaurantInput {
     id: String
     name: String
-    picture: String
+    pictureURL: String
     location: String
-    reviews: [CreateReviewInput!]
   }

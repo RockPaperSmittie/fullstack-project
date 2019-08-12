@@ -1,6 +1,6 @@
-import Photon, { RestaurantUpdateInput } from "@generated/photon";
+import Photon from "@generated/photon";
 import { Context } from "../types/context";
-import { Restaurant, CreateRestaurantInput, UpdateRestaurantInput } from "../types/types";
+import { Restaurant, CreateRestaurantInput, UpdateRestaurantInput, User } from "../types/types";
 
 export class RestaurantHandler {
 
@@ -20,27 +20,52 @@ export class RestaurantHandler {
         })
     }
 
-    public async createRestaurantInput(input: CreateRestaurantInput): Promise<Restaurant> {
+    public async createRestaurant(input: CreateRestaurantInput): Promise<Restaurant> {
         return await this.photon.restaurants.create({
-            data: input,
+            data: {
+                name: input.name,
+                location: input.location,
+                pictureURL: input.pictureURL,
+                author: {
+                    connect: {
+                        id: input.user
+                    }
+                }
+            }
         })
     }
 
     public async updateRestaurantInput(input: UpdateRestaurantInput): Promise<Restaurant> {
-        const {id, ...data} = input
+        const { id, ...data } = input
         return await this.photon.restaurants.update({
             where: {
-                id: input.id
+                id
             },
-            data: <RestaurantUpdateInput>data
+            data
         })
     }
 
     public async deleteRestaurant(id: string): Promise<Restaurant> {
+        await this.photon.reviews.deleteMany({
+            where: {
+                restaurant: {
+                    id
+                }
+            },
+        })
+
         return await this.photon.restaurants.delete({
             where: { id }
         })
     }
 
-    
+    public async getUserForRestaurant(id: string): Promise<User> {
+        return await this.photon.restaurants.findOne({
+            where: {
+                id: id
+            }
+        }).author()
+    }
+
+
 }

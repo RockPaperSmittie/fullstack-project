@@ -1,4 +1,4 @@
-import { QueryResolvers, User, Review, Restaurant } from "../types/types";
+import { QueryResolvers } from "../types/types";
 import { ReviewHandler } from "../handlers/ReviewHandler"
 import { UserHandler } from "../handlers/UserHandler"
 import { RestaurantHandler } from "../handlers/RestaurantHandler";

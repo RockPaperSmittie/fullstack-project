@@ -1,6 +1,11 @@
+// datasource db {
+//   provider = "postgresql"
+//   url      = "postgresql://ruansmit@localhost:5432/fullstack_project?schema=fullstack"
+// }
+
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://ruansmit@localhost:5432/fullstack_project?schema=fullstack"
+  url      = "postgresql://Jaco2@localhost:5432/fullstack_project?schema=fullstack"
 }
 
 generator photonjs {
@@ -28,9 +33,11 @@ model Review {
 }
 
 model Restaurant {
-  id       String   @id @default(cuid()) @unique
-  name     String
-  picture  String
-  location String
-  reviews  Review[]
+  id         String   @id @default(cuid()) @unique
+  createdAt  DateTime @default(now())
+  name       String
+  pictureURL String
+  location   String
+  reviews    Review[]
+  author     User?
 }
