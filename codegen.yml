@@ -6,7 +6,7 @@ require:
 generates:
   ./src/types/types.d.ts:
     config:
-      contextType: ./context#MyContext
+      contextType: ./context#Context
     plugins:
       - typescript
       - typescript-resolvers

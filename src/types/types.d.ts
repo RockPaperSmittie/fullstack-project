@@ -12,15 +12,16 @@ export type Scalars = {
 
 export type CreateRestaurantInput = {
   name: Scalars["String"];
-  picture: Scalars["String"];
+  pictureURL: Scalars["String"];
   location: Scalars["String"];
+  user: Scalars["String"];
 };
 
 export type CreateReviewInput = {
   rating: Scalars["Int"];
   description: Scalars["String"];
-  author: UserInput;
-  restaurant: RestaurantInput;
+  author: Scalars["String"];
+  restaurant: Scalars["String"];
 };
 
 export type CreateUserInput = {
@@ -65,7 +66,7 @@ export type MutationUpdateRestaurantArgs = {
 };
 
 export type MutationDeleteRestaurantArgs = {
-  id?: Maybe<Scalars["String"]>;
+  id: Scalars["String"];
 };
 
 export type MutationCreateReviewArgs = {
@@ -77,7 +78,7 @@ export type MutationUpdateReviewArgs = {
 };
 
 export type MutationDeleteReviewArgs = {
-  id?: Maybe<Scalars["String"]>;
+  id: Scalars["String"];
 };
 
 export type Query = {
@@ -105,10 +106,12 @@ export type QueryRestaurantArgs = {
 export type Restaurant = {
   __typename?: "Restaurant";
   id: Scalars["String"];
+  createdAt: Scalars["String"];
   name: Scalars["String"];
-  picture: Scalars["String"];
+  pictureURL: Scalars["String"];
   location: Scalars["String"];
   reviews?: Maybe<Array<Review>>;
+  author?: Maybe<User>;
 };
 
 export type RestaurantInput = {
@@ -128,17 +131,16 @@ export type Review = {
 export type UpdateRestaurantInput = {
   id?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
-  picture?: Maybe<Scalars["String"]>;
+  pictureURL?: Maybe<Scalars["String"]>;
   location?: Maybe<Scalars["String"]>;
-  reviews?: Maybe<Array<CreateReviewInput>>;
 };
 
 export type UpdateReviewInput = {
   id: Scalars["String"];
   rating?: Maybe<Scalars["Int"]>;
   description?: Maybe<Scalars["String"]>;
-  author?: Maybe<User>;
-  restaurant?: Maybe<RestaurantInput>;
+  author?: Maybe<Scalars["String"]>;
+  restaurant?: Maybe<Scalars["String"]>;
 };
 
 export type UpdateUserInput = {
@@ -146,7 +148,6 @@ export type UpdateUserInput = {
   username?: Maybe<Scalars["String"]>;
   firstName?: Maybe<Scalars["String"]>;
   lastName?: Maybe<Scalars["String"]>;
-  reviews?: Maybe<Array<CreateReviewInput>>;
   profilePictureURL: Scalars["String"];
 };
 
@@ -160,13 +161,6 @@ export type User = {
   lastName?: Maybe<Scalars["String"]>;
   profilePictureURL: Scalars["String"];
   reviews?: Maybe<Array<Review>>;
-};
-
-export type UserInput = {
-  userName: Scalars["String"];
-  firstName?: Maybe<Scalars["String"]>;
-  lastName?: Maybe<Scalars["String"]>;
-  profilePictureURL: Scalars["String"];
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -250,13 +244,12 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   CreateUserInput: CreateUserInput;
   UpdateUserInput: UpdateUserInput;
-  CreateReviewInput: CreateReviewInput;
-  UserInput: UserInput;
-  RestaurantInput: RestaurantInput;
   CreateRestaurantInput: CreateRestaurantInput;
   UpdateRestaurantInput: UpdateRestaurantInput;
+  CreateReviewInput: CreateReviewInput;
   UpdateReviewInput: UpdateReviewInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  RestaurantInput: RestaurantInput;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -271,17 +264,16 @@ export type ResolversParentTypes = {
   Mutation: {};
   CreateUserInput: CreateUserInput;
   UpdateUserInput: UpdateUserInput;
-  CreateReviewInput: CreateReviewInput;
-  UserInput: UserInput;
-  RestaurantInput: RestaurantInput;
   CreateRestaurantInput: CreateRestaurantInput;
   UpdateRestaurantInput: UpdateRestaurantInput;
+  CreateReviewInput: CreateReviewInput;
   UpdateReviewInput: UpdateReviewInput;
   Boolean: Scalars["Boolean"];
+  RestaurantInput: RestaurantInput;
 };
 
 export type MutationResolvers<
-  ContextType =,
+  ContextType = Context,
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
   createUser?: Resolver<
@@ -341,7 +333,7 @@ export type MutationResolvers<
 };
 
 export type QueryResolvers<
-  ContextType =,
+  ContextType = Context,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = {
   users?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
@@ -372,22 +364,24 @@ export type QueryResolvers<
 };
 
 export type RestaurantResolvers<
-  ContextType =,
+  ContextType = Context,
   ParentType extends ResolversParentTypes["Restaurant"] = ResolversParentTypes["Restaurant"]
 > = {
   id?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  picture?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  pictureURL?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   location?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   reviews?: Resolver<
     Maybe<Array<ResolversTypes["Review"]>>,
     ParentType,
     ContextType
   >;
+  author?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
 };
 
 export type ReviewResolvers<
-  ContextType =,
+  ContextType = Context,
   ParentType extends ResolversParentTypes["Review"] = ResolversParentTypes["Review"]
 > = {
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
@@ -399,7 +393,7 @@ export type ReviewResolvers<
 };
 
 export type UserResolvers<
-  ContextType =,
+  ContextType = Context,
   ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
 > = {
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
@@ -424,7 +418,7 @@ export type UserResolvers<
   >;
 };
 
-export type Resolvers<ContextType => = {
+export type Resolvers<ContextType = Context> = {
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Restaurant?: RestaurantResolvers<ContextType>;
@@ -436,4 +430,4 @@ export type Resolvers<ContextType => = {
  * @deprecated
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
  */
-export type IResolvers<ContextType => = Resolvers<ContextType>;
+export type IResolvers<ContextType = Context> = Resolvers<ContextType>;

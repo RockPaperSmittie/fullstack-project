@@ -22,7 +22,7 @@ export class UserHandler {
 
     public async getUserById(id: string): Promise<User> {
         return await this.photon.users.findOne({
-            where: { id }
+            where: { id },
         })
     }
 
@@ -32,7 +32,7 @@ export class UserHandler {
             where: {
                 id: input.id
             },
-            data: <UserUpdateInput>data
+            data: data
         })
     }
 

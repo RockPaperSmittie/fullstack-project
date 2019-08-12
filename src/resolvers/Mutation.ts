@@ -8,11 +8,11 @@ export const Mutation: MutationResolvers = {
     //User mutations
     createUser: (root, args, ctx) => {
         const handler = new UserHandler(ctx)
-        return handler.createUser(<CreateUserInput>args.input)
+        return handler.createUser(args.input)
     },
     updateUser: (root, args, ctx) => {
         const handler = new UserHandler(ctx)
-        return handler.updateUser(<UpdateUserInput>args.input)
+        return handler.updateUser(args.input)
     },
     deleteUser: (root, args, ctx) => {
         const handler = new UserHandler(ctx)
@@ -22,12 +22,12 @@ export const Mutation: MutationResolvers = {
     //Restaurant mutations
     createRestaurant: (root, args, ctx) => {
         const handler = new RestaurantHandler(ctx)
-        return handler.createRestaurantInput(args.input)
+        return handler.createRestaurant(args.input)
     },
     
     updateRestaurant: (root, args, ctx) => {
         const handler = new RestaurantHandler(ctx)
-        return handler.updateRestaurantInput(<UpdateRestaurantInput>args.input)
+        return handler.updateRestaurantInput(args.input)
     },
 
     deleteRestaurant: (root, args, ctx) => {
@@ -38,7 +38,7 @@ export const Mutation: MutationResolvers = {
     //Review mutations
     createReview: (root, args, ctx) => {
         const handler = new ReviewHandler(ctx)
-        return handler.createReview(<CreateReviewInput>args.input)
+        return handler.createReview(args.input)
     },
 
     updateReview: (root, args, ctx) => {
@@ -50,28 +50,4 @@ export const Mutation: MutationResolvers = {
         const handler = new ReviewHandler(ctx)
         return handler.deleteReview(args.id)
     },
-    // createReview: (root, args, ctx) => {
-    //     const result: Review = {
-    //         id: "",
-    //         createdAt: "",
-    //         rating: 1,
-    //         description: "",
-    //         author: {
-    //             id: "",
-    //             createdAt: "",
-    //             email: "ruan@test.com",
-    //             username: "MadLad",
-    //             firstName: "Ruan",
-    //             lastName: "Smit",
-    //             profilePictureURL: "",
-    //         },
-    //         restaurant: {
-    //             id: "",
-    //             name: "",
-    //             location: "",
-    //             picture: ""
-    //         }
-    //     }
-    //     return result
-    // }
 }
