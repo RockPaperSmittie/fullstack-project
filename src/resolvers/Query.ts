@@ -1,6 +1,7 @@
 import { QueryResolvers, User, Review, Restaurant } from "../types/types";
 import { ReviewHandler } from "../handlers/ReviewHandler"
 import { UserHandler } from "../handlers/UserHandler"
+import { RestaurantHandler } from "../handlers/RestaurantHandler";
 
 export const Query: QueryResolvers = {
     users: async (root, args, ctx) => {
@@ -11,37 +12,23 @@ export const Query: QueryResolvers = {
         const handler = new UserHandler(ctx)
         return await handler.getUserById(args.id)
     },
-    reviews: (root, args, ctx) => {
-        const result: Review[] = []
-        return result
+    reviews: async (root, args, ctx) => {
+        const handler = new ReviewHandler(ctx)
+        return await handler.getReviews()
     },
-    review: (root, args, ctx) => {
-        const handler = new ReviewHandler()
-        handler.getReviewById(args.id)
-        return {
-            id: "1",
-            createdAt: "",
-            rating: 4,
-            description: "A description...",
-            author: {
-                id: "",
-                createdAt: "",
-                email: "ruan@test.com",
-                username: "MadLad",
-                firstName: "Ruan",
-                lastName: "Smit",
-                profilePictureURL: "",
-            },
-            restaurant: {
-                id: "",
-                name: "",
-                location: "",
-                picture: ""
-            },
-        }
+    
+    review: async (root, args, ctx) => {
+        const handler = new ReviewHandler(ctx)
+        return await handler.getReviewById(args.id)
     },
-    restaurants: (root, args, ctx) => {
-        const result: Restaurant[] = []
-        return result
+    
+    restaurants: async (root, args, ctx) => {
+            const handler = new RestaurantHandler(ctx)
+            return await handler.getRestaurants()
+    },
+
+    restaurant: async (root, args, ctx) => {
+        const handler = new RestaurantHandler(ctx)
+        return await handler.getRestaurantById(args.id)
     }
 }

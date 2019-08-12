@@ -4,6 +4,7 @@
     reviews: [Review!]!
     review(id: String!): Review
     restaurants: [Restaurant!]!
+    restaurant (id: String!): Restaurant
   }
 
   type Mutation {
@@ -12,7 +13,12 @@
     deleteUser (id: String!): User!
 
     createRestaurant (input: CreateRestaurantInput!): Restaurant!
-    createReview (input: CreateReviewInput): Review!
+    updateRestaurant (input: UpdateRestaurantInput!): Restaurant!
+    deleteRestaurant (id: String): Restaurant!
+
+    createReview (input: CreateReviewInput!): Review!
+    updateReview (input: UpdateReviewInput!): Review!
+    deleteReview (id: String): Review!
   }
 
   type User {
@@ -58,6 +64,14 @@
     restaurant: RestaurantInput!
   },
 
+  input UpdateReviewInput {
+    id: String!
+    rating: Int
+    description: String
+    author: User
+    restaurant: RestaurantInput
+  }
+
   input UserInput {
     userName: String!
     firstName: String
@@ -82,4 +96,12 @@
     name: String!
     picture: String!
     location: String!
+  }
+
+  input UpdateRestaurantInput {
+    id: String
+    name: String
+    picture: String
+    location: String
+    reviews: [CreateReviewInput!]
   }

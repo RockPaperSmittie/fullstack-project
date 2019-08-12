@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://Jaco2@localhost:5432/fullstack_project?schema=fullstack"
+  url      = "postgresql://ruansmit@localhost:5432/fullstack_project?schema=fullstack"
 }
 
 generator photonjs {
