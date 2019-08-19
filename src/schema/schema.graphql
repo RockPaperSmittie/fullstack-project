@@ -51,6 +51,11 @@
     author: User
   }
 
+  type LoginResponse {
+    token: String
+    user: User
+  }
+
   input CreateUserInput {
     username: String!
     email: String!
@@ -98,4 +103,15 @@
     name: String
     pictureURL: String
     location: String
+  }
+
+  input RegisterInput {
+    username: String!
+    email: String!
+    password: String!
+  }
+
+  input LoginInput {
+    username: String!
+    email: String!
   }

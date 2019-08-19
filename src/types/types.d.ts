@@ -32,8 +32,21 @@ export type CreateUserInput = {
   profilePictureURL: Scalars["String"];
 };
 
+export type LoginInput = {
+  username: Scalars["String"];
+  email: Scalars["String"];
+};
+
+export type LoginResponse = {
+  __typename?: "LoginResponse";
+  token?: Maybe<Scalars["String"]>;
+  user?: Maybe<User>;
+};
+
 export type Mutation = {
   __typename?: "Mutation";
+  register: User;
+  login: LoginResponse;
   createUser: User;
   updateUser: User;
   deleteUser: User;
@@ -43,6 +56,14 @@ export type Mutation = {
   createReview: Review;
   updateReview: Review;
   deleteReview: Review;
+};
+
+export type MutationRegisterArgs = {
+  input?: Maybe<RegisterInput>;
+};
+
+export type MutationLoginArgs = {
+  input?: Maybe<LoginInput>;
 };
 
 export type MutationCreateUserArgs = {
@@ -101,6 +122,11 @@ export type QueryReviewArgs = {
 
 export type QueryRestaurantArgs = {
   id: Scalars["String"];
+};
+
+export type RegisterInput = {
+  username: Scalars["String"];
+  email: Scalars["String"];
 };
 
 export type Restaurant = {
@@ -242,6 +268,9 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars["Int"]>;
   Restaurant: ResolverTypeWrapper<Restaurant>;
   Mutation: ResolverTypeWrapper<{}>;
+  RegisterInput: RegisterInput;
+  LoginInput: LoginInput;
+  LoginResponse: ResolverTypeWrapper<LoginResponse>;
   CreateUserInput: CreateUserInput;
   UpdateUserInput: UpdateUserInput;
   CreateRestaurantInput: CreateRestaurantInput;
@@ -262,6 +291,9 @@ export type ResolversParentTypes = {
   Int: Scalars["Int"];
   Restaurant: Restaurant;
   Mutation: {};
+  RegisterInput: RegisterInput;
+  LoginInput: LoginInput;
+  LoginResponse: LoginResponse;
   CreateUserInput: CreateUserInput;
   UpdateUserInput: UpdateUserInput;
   CreateRestaurantInput: CreateRestaurantInput;
@@ -272,10 +304,30 @@ export type ResolversParentTypes = {
   RestaurantInput: RestaurantInput;
 };
 
+export type LoginResponseResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes["LoginResponse"] = ResolversParentTypes["LoginResponse"]
+> = {
+  token?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
+};
+
 export type MutationResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
+  register?: Resolver<
+    ResolversTypes["User"],
+    ParentType,
+    ContextType,
+    MutationRegisterArgs
+  >;
+  login?: Resolver<
+    ResolversTypes["LoginResponse"],
+    ParentType,
+    ContextType,
+    MutationLoginArgs
+  >;
   createUser?: Resolver<
     ResolversTypes["User"],
     ParentType,
@@ -419,6 +471,7 @@ export type UserResolvers<
 };
 
 export type Resolvers<ContextType = Context> = {
+  LoginResponse?: LoginResponseResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Restaurant?: RestaurantResolvers<ContextType>;
