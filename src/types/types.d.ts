@@ -45,8 +45,6 @@ export type LoginResponse = {
 
 export type Mutation = {
   __typename?: "Mutation";
-  register: User;
-  login: LoginResponse;
   createUser: User;
   updateUser: User;
   deleteUser: User;
@@ -56,14 +54,6 @@ export type Mutation = {
   createReview: Review;
   updateReview: Review;
   deleteReview: Review;
-};
-
-export type MutationRegisterArgs = {
-  input?: Maybe<RegisterInput>;
-};
-
-export type MutationLoginArgs = {
-  input?: Maybe<LoginInput>;
 };
 
 export type MutationCreateUserArgs = {
@@ -127,6 +117,7 @@ export type QueryRestaurantArgs = {
 export type RegisterInput = {
   username: Scalars["String"];
   email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type Restaurant = {
@@ -268,9 +259,6 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars["Int"]>;
   Restaurant: ResolverTypeWrapper<Restaurant>;
   Mutation: ResolverTypeWrapper<{}>;
-  RegisterInput: RegisterInput;
-  LoginInput: LoginInput;
-  LoginResponse: ResolverTypeWrapper<LoginResponse>;
   CreateUserInput: CreateUserInput;
   UpdateUserInput: UpdateUserInput;
   CreateRestaurantInput: CreateRestaurantInput;
@@ -278,7 +266,10 @@ export type ResolversTypes = {
   CreateReviewInput: CreateReviewInput;
   UpdateReviewInput: UpdateReviewInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
+  LoginResponse: ResolverTypeWrapper<LoginResponse>;
   RestaurantInput: RestaurantInput;
+  RegisterInput: RegisterInput;
+  LoginInput: LoginInput;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -291,9 +282,6 @@ export type ResolversParentTypes = {
   Int: Scalars["Int"];
   Restaurant: Restaurant;
   Mutation: {};
-  RegisterInput: RegisterInput;
-  LoginInput: LoginInput;
-  LoginResponse: LoginResponse;
   CreateUserInput: CreateUserInput;
   UpdateUserInput: UpdateUserInput;
   CreateRestaurantInput: CreateRestaurantInput;
@@ -301,7 +289,10 @@ export type ResolversParentTypes = {
   CreateReviewInput: CreateReviewInput;
   UpdateReviewInput: UpdateReviewInput;
   Boolean: Scalars["Boolean"];
+  LoginResponse: LoginResponse;
   RestaurantInput: RestaurantInput;
+  RegisterInput: RegisterInput;
+  LoginInput: LoginInput;
 };
 
 export type LoginResponseResolvers<
@@ -316,18 +307,6 @@ export type MutationResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
 > = {
-  register?: Resolver<
-    ResolversTypes["User"],
-    ParentType,
-    ContextType,
-    MutationRegisterArgs
-  >;
-  login?: Resolver<
-    ResolversTypes["LoginResponse"],
-    ParentType,
-    ContextType,
-    MutationLoginArgs
-  >;
   createUser?: Resolver<
     ResolversTypes["User"],
     ParentType,
