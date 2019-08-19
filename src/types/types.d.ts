@@ -32,17 +32,6 @@ export type CreateUserInput = {
   profilePictureURL: Scalars["String"];
 };
 
-export type LoginInput = {
-  username: Scalars["String"];
-  email: Scalars["String"];
-};
-
-export type LoginResponse = {
-  __typename?: "LoginResponse";
-  token?: Maybe<Scalars["String"]>;
-  user?: Maybe<User>;
-};
-
 export type Mutation = {
   __typename?: "Mutation";
   createUser: User;
@@ -112,12 +101,6 @@ export type QueryReviewArgs = {
 
 export type QueryRestaurantArgs = {
   id: Scalars["String"];
-};
-
-export type RegisterInput = {
-  username: Scalars["String"];
-  email: Scalars["String"];
-  password: Scalars["String"];
 };
 
 export type Restaurant = {
@@ -266,10 +249,7 @@ export type ResolversTypes = {
   CreateReviewInput: CreateReviewInput;
   UpdateReviewInput: UpdateReviewInput;
   Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
-  LoginResponse: ResolverTypeWrapper<LoginResponse>;
   RestaurantInput: RestaurantInput;
-  RegisterInput: RegisterInput;
-  LoginInput: LoginInput;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -289,18 +269,7 @@ export type ResolversParentTypes = {
   CreateReviewInput: CreateReviewInput;
   UpdateReviewInput: UpdateReviewInput;
   Boolean: Scalars["Boolean"];
-  LoginResponse: LoginResponse;
   RestaurantInput: RestaurantInput;
-  RegisterInput: RegisterInput;
-  LoginInput: LoginInput;
-};
-
-export type LoginResponseResolvers<
-  ContextType = Context,
-  ParentType extends ResolversParentTypes["LoginResponse"] = ResolversParentTypes["LoginResponse"]
-> = {
-  token?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  user?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
 };
 
 export type MutationResolvers<
@@ -450,7 +419,6 @@ export type UserResolvers<
 };
 
 export type Resolvers<ContextType = Context> = {
-  LoginResponse?: LoginResponseResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Restaurant?: RestaurantResolvers<ContextType>;
