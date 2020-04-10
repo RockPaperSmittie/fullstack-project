@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "apollo-server-koa": "^2.8.1",
-    "auth0-js": "^9.11.3",
+    "auth0-js": "^9.13.2",
     "graphql": "^14.4.2",
     "graphql-import": "^0.7.1",
     "koa": "^2.7.0",
