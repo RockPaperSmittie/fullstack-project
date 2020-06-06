@@ -23,7 +23,7 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "apollo-server-koa": "^2.8.1",
+    "apollo-server-koa": "^2.14.2",
     "auth0-js": "^9.11.3",
     "graphql": "^14.4.2",
     "graphql-import": "^0.7.1",
